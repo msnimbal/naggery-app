@@ -6,20 +6,54 @@ const prisma = new PrismaClient()
 
 async function main() {
   try {
-    // Create demo user
+    console.log('🌱 Starting database seeding...')
+
+    // Create demo user with all security features enabled
     const hashedPassword = await bcrypt.hash('johndoe123', 12)
     
     const demoUser = await prisma.user.upsert({
       where: { email: 'john@doe.com' },
-      update: {},
+      update: {
+        // Update existing demo user with new security fields
+        phone: '+1234567890',
+        emailVerified: new Date(),
+        phoneVerified: new Date(),
+        twoFaEnabled: false, // Initially disabled for easy testing
+        isActive: true,
+        loginAttempts: 0,
+        lockedUntil: null
+      },
       create: {
         email: 'john@doe.com',
         name: 'John Doe',
-        password: hashedPassword
+        password: hashedPassword,
+        phone: '+1234567890',
+        emailVerified: new Date(),
+        phoneVerified: new Date(),
+        twoFaEnabled: false, // Initially disabled for easy testing
+        isActive: true,
+        loginAttempts: 0,
+        lockedUntil: null
       }
     })
 
-    console.log('Demo user created:', demoUser.email)
+    console.log('✅ Demo user created/updated:', demoUser.email)
+    console.log('   - Email verified: ✅')
+    console.log('   - Phone verified: ✅')
+    console.log('   - Account active: ✅')
+    console.log('   - 2FA: Disabled (can be enabled in security settings)')
+
+    // Clean up any existing verification requests for the demo user
+    await prisma.verificationRequest.deleteMany({
+      where: { userId: demoUser.id }
+    })
+
+    // Clean up any existing backup codes for the demo user
+    await prisma.backupCode.deleteMany({
+      where: { userId: demoUser.id }
+    })
+
+    console.log('✅ Cleaned up existing verification data')
 
     // Create sample entries for demo user
     const sampleEntries = [
@@ -62,9 +96,22 @@ async function main() {
       })
     }
 
-    console.log('Sample entries created for demo user')
+    console.log('✅ Sample entries created')
+    console.log('')
+    console.log('🎉 Database seeding completed successfully!')
+    console.log('')
+    console.log('Demo Account Credentials:')
+    console.log('Email: john@doe.com')
+    console.log('Password: johndoe123')
+    console.log('Phone: +1234567890')
+    console.log('')
+    console.log('Security Status:')
+    console.log('- Email Verified: ✅')
+    console.log('- Phone Verified: ✅')
+    console.log('- 2FA Enabled: ❌ (can be enabled in /security)')
+    console.log('- Account Active: ✅')
   } catch (error) {
-    console.error('Seeding error:', error)
+    console.error('❌ Seeding error:', error)
     throw error
   }
 }

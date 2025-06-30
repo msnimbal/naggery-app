@@ -2,35 +2,81 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
+import { VerificationService } from '@/lib/security/verification'
+import { EmailService } from '@/lib/security/email-service'
+import { SecurityUtils } from '@/lib/security/encryption'
+import { RateLimiter } from '@/lib/security/rate-limiting'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password } = await request.json()
+    const { name, email, password, phone } = await request.json()
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !phone) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Name, email, password, and phone number are required' },
         { status: 400 }
       )
     }
 
-    if (password.length < 6) {
+    // Validate email format
+    if (!SecurityUtils.isValidEmail(email)) {
       return NextResponse.json(
-        { error: 'Password must be at least 6 characters long' },
+        { error: 'Invalid email format' },
         { status: 400 }
       )
     }
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
+    // Validate phone number
+    const formattedPhone = SecurityUtils.formatPhone(phone)
+    if (!SecurityUtils.isValidPhone(formattedPhone)) {
+      return NextResponse.json(
+        { error: 'Invalid phone number format. Please include country code (e.g., +1234567890)' },
+        { status: 400 }
+      )
+    }
+
+    // Validate password strength
+    const passwordValidation = SecurityUtils.isPasswordStrong(password)
+    if (!passwordValidation.isStrong) {
+      return NextResponse.json(
+        { error: 'Password requirements not met', details: passwordValidation.errors },
+        { status: 400 }
+      )
+    }
+
+    // Rate limiting
+    const clientIP = request.headers.get('x-forwarded-for') || 'unknown'
+    const rateLimitResult = await RateLimiter.checkLoginAttempts(clientIP)
+    
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: rateLimitResult.message },
+        { status: 429 }
+      )
+    }
+
+    // Check if user already exists with email
+    const existingUserByEmail = await prisma.user.findUnique({
       where: { email }
     })
 
-    if (existingUser) {
+    if (existingUserByEmail) {
       return NextResponse.json(
         { error: 'User with this email already exists' },
+        { status: 400 }
+      )
+    }
+
+    // Check if user already exists with phone
+    const existingUserByPhone = await prisma.user.findUnique({
+      where: { phone: formattedPhone }
+    })
+
+    if (existingUserByPhone) {
+      return NextResponse.json(
+        { error: 'User with this phone number already exists' },
         { status: 400 }
       )
     }
@@ -38,23 +84,56 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // Create user
+    // Create user (inactive until email verification)
     const user = await prisma.user.create({
       data: {
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        phone: formattedPhone,
+        isActive: false // User must verify email first
       },
       select: {
         id: true,
         name: true,
         email: true,
+        phone: true,
+        isActive: true,
         createdAt: true
       }
     })
 
+    // Create email verification request
+    const { token } = await VerificationService.createVerificationRequest(
+      user.id,
+      'EMAIL_VERIFICATION'
+    )
+
+    // Send verification email (mock in development)
+    const emailSent = await EmailService.sendVerificationEmail(
+      user.email,
+      token,
+      user.name || 'User'
+    )
+
+    if (!emailSent) {
+      // If email sending fails, still return success but mention the issue
+      console.error('Failed to send verification email')
+    }
+
     return NextResponse.json(
-      { message: 'User created successfully', user },
+      { 
+        message: 'Account created successfully! Please check your email to verify your account before logging in.',
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          isActive: user.isActive,
+          createdAt: user.createdAt
+        },
+        nextStep: 'email_verification'
+      },
       { status: 201 }
     )
   } catch (error) {

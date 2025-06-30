@@ -3,6 +3,13 @@ export interface User {
   id: string
   email: string
   name?: string
+  phone?: string
+  emailVerified?: Date
+  phoneVerified?: Date
+  twoFaEnabled: boolean
+  isActive: boolean
+  loginAttempts: number
+  lockedUntil?: Date
   createdAt: Date
   updatedAt: Date
 }
@@ -77,3 +84,49 @@ export const MOOD_COLORS: Record<Mood, string> = {
   ANXIOUS: '#8B5CF6',
   CALM: '#06B6D4'
 }
+
+// Security-related types
+export interface VerificationRequest {
+  id: string
+  userId: string
+  type: 'EMAIL_VERIFICATION' | 'SMS_VERIFICATION' | 'PASSWORD_RESET' | 'EMAIL_CHANGE' | 'TWO_FA_SETUP'
+  token: string
+  code?: string
+  attempts: number
+  verified: boolean
+  expires: Date
+  createdAt: Date
+}
+
+export interface BackupCode {
+  id: string
+  userId: string
+  code: string
+  used: boolean
+  usedAt?: Date
+  createdAt: Date
+}
+
+export interface SecuritySettings {
+  emailVerified: boolean
+  phoneVerified: boolean
+  twoFaEnabled: boolean
+  backupCodesGenerated: boolean
+  verificationStep: 'email' | 'phone' | '2fa' | 'complete'
+}
+
+export interface VerificationStep {
+  step: number
+  title: string
+  description: string
+  completed: boolean
+  required: boolean
+}
+
+export interface TwoFactorSetup {
+  secret: string
+  qrCodeUrl: string
+  backupCodes: string[]
+}
+
+export type VerificationType = 'EMAIL_VERIFICATION' | 'SMS_VERIFICATION' | 'PASSWORD_RESET' | 'EMAIL_CHANGE' | 'TWO_FA_SETUP'

@@ -45,13 +45,22 @@ model User {
   name          String?
   email         String    @unique
   password      String
+  phone         String?   @unique
   emailVerified DateTime?
+  phoneVerified DateTime?
+  twoFaEnabled  Boolean   @default(false)
+  twoFaSecret   String?
+  isActive      Boolean   @default(false)
+  loginAttempts Int       @default(0)
+  lockedUntil   DateTime?
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
   entries       Entry[]
+  backupCodes   BackupCode[]
+  verificationRequests VerificationRequest[]
 }
 
 model VerificationToken {
@@ -60,6 +69,44 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model VerificationRequest {
+  id        String            @id @default(cuid())
+  userId    String
+  type      VerificationType
+  token     String            @unique
+  code      String?
+  attempts  Int               @default(0)
+  verified  Boolean           @default(false)
+  expires   DateTime
+  createdAt DateTime          @default(now())
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expires])
+}
+
+model BackupCode {
+  id      String  @id @default(cuid())
+  userId  String
+  code    String
+  used    Boolean @default(false)
+  usedAt  DateTime?
+  createdAt DateTime @default(now())
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@unique([userId, code])
+}
+
+enum VerificationType {
+  EMAIL_VERIFICATION
+  SMS_VERIFICATION
+  PASSWORD_RESET
+  EMAIL_CHANGE
+  TWO_FA_SETUP
 }
 
 model Entry {
