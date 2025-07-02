@@ -1,0 +1,229 @@
+sending incremental file list
+components.json
+middleware.ts
+next-env.d.ts
+next.config.js
+package.json
+postcss.config.js
+tailwind.config.ts
+tsconfig.json
+tsconfig.tsbuildinfo
+app/
+app/globals.css
+app/layout.tsx
+app/page.tsx
+app/providers.tsx
+app/analytics/
+app/analytics/page.tsx
+app/api/
+app/api/ai/
+app/api/ai/process-text/
+app/api/ai/process-text/route.ts
+app/api/analytics/
+app/api/analytics/route.ts
+app/api/auth/
+app/api/auth/[...nextauth]/
+app/api/auth/[...nextauth]/route.ts
+app/api/auth/setup-2fa/
+app/api/auth/setup-2fa/route.ts
+app/api/auth/signup/
+app/api/auth/signup/route.ts
+app/api/auth/verify-2fa/
+app/api/auth/verify-2fa/route.ts
+app/api/auth/verify-email/
+app/api/auth/verify-email/route.ts
+app/api/auth/verify-sms/
+app/api/auth/verify-sms/route.ts
+app/api/entries/
+app/api/entries/route.ts
+app/api/entries/[id]/
+app/api/entries/[id]/route.ts
+app/api/security/
+app/api/security/api-keys/
+app/api/security/api-keys/route.ts
+app/api/security/api-keys/[id]/
+app/api/security/api-keys/[id]/route.ts
+app/api/security/settings/
+app/api/security/settings/route.ts
+app/api/security/test-api-key/
+app/api/security/test-api-key/route.ts
+app/api/upload/
+app/api/upload/route.ts
+app/entries/
+app/entries/page.tsx
+app/entries/[id]/
+app/entries/[id]/page.tsx
+app/entry/
+app/entry/edit/
+app/entry/edit/[id]/
+app/entry/edit/[id]/page.tsx
+app/entry/new/
+app/entry/new/page.tsx
+app/login/
+app/login/page.tsx
+app/security/
+app/security/page.tsx
+app/settings/
+app/settings/page.tsx
+app/signup/
+app/signup/page.tsx
+app/terms/
+app/terms/page.tsx
+app/verify-email/
+app/verify-email/page.tsx
+components/
+components/theme-provider.tsx
+components/layout/
+components/layout/bottom-nav.tsx
+components/layout/page-header.tsx
+components/mood/
+components/mood/mood-selector.tsx
+components/security/
+components/security/email-verification-notice.tsx
+components/security/phone-verification.tsx
+components/security/two-factor-setup.tsx
+components/security/verification-wizard.tsx
+components/ui/
+components/ui/accordion.tsx
+components/ui/alert-dialog.tsx
+components/ui/alert.tsx
+components/ui/aspect-ratio.tsx
+components/ui/avatar.tsx
+components/ui/badge.tsx
+components/ui/breadcrumb.tsx
+components/ui/button.tsx
+components/ui/calendar.tsx
+components/ui/card.tsx
+components/ui/carousel.tsx
+components/ui/checkbox.tsx
+components/ui/collapsible.tsx
+components/ui/command.tsx
+components/ui/context-menu.tsx
+components/ui/date-range-picker.tsx
+components/ui/dialog.tsx
+components/ui/drawer.tsx
+components/ui/dropdown-menu.tsx
+components/ui/form.tsx
+components/ui/hover-card.tsx
+components/ui/input-otp.tsx
+components/ui/input.tsx
+components/ui/label.tsx
+components/ui/menubar.tsx
+components/ui/navigation-menu.tsx
+components/ui/pagination.tsx
+components/ui/popover.tsx
+components/ui/progress.tsx
+components/ui/radio-group.tsx
+components/ui/resizable.tsx
+components/ui/scroll-area.tsx
+components/ui/select.tsx
+components/ui/separator.tsx
+components/ui/sheet.tsx
+components/ui/skeleton.tsx
+components/ui/slider.tsx
+components/ui/sonner.tsx
+components/ui/switch.tsx
+components/ui/table.tsx
+components/ui/tabs.tsx
+components/ui/task-card.tsx
+components/ui/textarea.tsx
+components/ui/toast.tsx
+components/ui/toaster.tsx
+components/ui/toggle-group.tsx
+components/ui/toggle.tsx
+components/ui/tooltip.tsx
+components/ui/use-toast.ts
+components/voice/
+components/voice/voice-recorder.tsx
+hooks/
+hooks/use-toast.ts
+lib/
+lib/ai-processing.ts
+lib/auth.ts
+lib/db.ts
+lib/speech-recognition.ts
+lib/types.ts
+lib/utils.ts
+lib/voice-recorder.ts
+lib/security/
+lib/security/email-service.ts
+lib/security/encryption.ts
+lib/security/rate-limiting.ts
+lib/security/sms-service.ts
+lib/security/two-factor.ts
+lib/security/verification.ts
+prisma/
+prisma/schema.prisma
+public/
+public/apple-touch-icon.png
+public/favicon.ico
+public/favicon.png
+public/manifest.json
+public/sw.js
+scripts/
+scripts/seed.ts
+
+sent 2,054,925 bytes  received 2,502 bytes  4,114,854.00 bytes/sec
+total size is 2,044,866  speedup is 0.99
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.28
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/13) ...
+   Generating static pages (3/13) 
+   Generating static pages (6/13) 
+   Generating static pages (9/13) 
+ ✓ Generating static pages (13/13)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    5.12 kB         122 kB
+├ ○ /_not-found                          876 B          88.3 kB
+├ ○ /analytics                           109 kB          213 kB
+├ ƒ /api/ai/process-text                 0 B                0 B
+├ ƒ /api/analytics                       0 B                0 B
+├ ƒ /api/auth/[...nextauth]              0 B                0 B
+├ ƒ /api/auth/setup-2fa                  0 B                0 B
+├ ƒ /api/auth/signup                     0 B                0 B
+├ ƒ /api/auth/verify-2fa                 0 B                0 B
+├ ƒ /api/auth/verify-email               0 B                0 B
+├ ƒ /api/auth/verify-sms                 0 B                0 B
+├ ƒ /api/entries                         0 B                0 B
+├ ƒ /api/entries/[id]                    0 B                0 B
+├ ƒ /api/security/api-keys               0 B                0 B
+├ ƒ /api/security/api-keys/[id]          0 B                0 B
+├ ƒ /api/security/settings               0 B                0 B
+├ ƒ /api/security/test-api-key           0 B                0 B
+├ ƒ /api/upload                          0 B                0 B
+├ ○ /entries                             4.52 kB         115 kB
+├ ƒ /entries/[id]                        4.16 kB         106 kB
+├ ƒ /entry/edit/[id]                     4.49 kB        99.9 kB
+├ ○ /entry/new                           9.83 kB         129 kB
+├ ○ /login                               2.85 kB         117 kB
+├ ○ /security                            16.2 kB         126 kB
+├ ○ /settings                            5.55 kB         120 kB
+├ ○ /signup                              7.46 kB         140 kB
+├ ○ /terms                               4.11 kB         108 kB
+└ ○ /verify-email                        2.54 kB          98 kB
++ First Load JS shared by all            87.4 kB
+  ├ chunks/117-1ba652f89b7ff5a2.js       31.8 kB
+  ├ chunks/fd9d1056-898dbe322567f69b.js  53.6 kB
+  └ other shared chunks (total)          2 kB
+
+
+ƒ Middleware                             49.6 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

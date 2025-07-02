@@ -21,3 +21,60 @@ Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
  GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 28ms
  GET /api/auth/session 200 in 22ms
  GET /api/auth/session 200 in 15ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 25ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 44ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 19ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 25ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 18ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 1639ms (796 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /signup. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ✓ Compiled /login in 137ms (400 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ✓ Compiled /api/auth/[...nextauth] in 153ms (569 modules)
+ GET /api/auth/providers 200 in 292ms
+ GET /api/auth/csrf 200 in 23ms
+User signed in: {
+  userId: 'cmcib3ete0000tj8v13zkqcu0',
+  email: 'john@doe.com',
+  isNewUser: undefined
+}
+ POST /api/auth/callback/credentials 200 in 444ms
+ GET /api/auth/session 200 in 25ms
+ ✓ Compiled / in 400ms (1063 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ✓ Compiled /api/entries in 229ms (643 modules)
+ GET /api/entries?limit=5 200 in 329ms
+ GET /api/entries?limit=5 200 in 18ms
+ ✓ Compiled /settings in 399ms (1106 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /settings. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /api/entries?limit=5 200 in 25ms
+ GET /api/entries?limit=5 200 in 18ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 33ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 88ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET / 200 in 32ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/entries?limit=5 200 in 26ms
+ GET /api/entries?limit=5 200 in 18ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/entries?limit=5 200 in 31ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/entries?limit=5 200 in 21ms
+ GET /api/auth/session 200 in 25ms
+ GET /api/entries?limit=5 200 in 18ms
+ GET /api/auth/session 200 in 25ms
+ GET /api/entries?limit=5 200 in 30ms

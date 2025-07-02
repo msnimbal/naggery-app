@@ -1,0 +1,1 @@
+{"version":1,"functions":{"/api/ai/process-text":{},"/api/analytics":{},"/api/auth/verify-2fa":{},"/api/auth/signup":{},"/api/auth/setup-2fa":{},"/api/entries/[id]":{},"/api/auth/verify-email":{},"/api/auth/verify-sms":{},"/api/entries":{},"/api/security/test-api-key":{},"/api/security/api-keys":{},"/api/security/settings":{},"/api/security/api-keys/[id]":{},"/api/upload":{}}}

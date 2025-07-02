@@ -1,0 +1,48 @@
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1920ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 525ms (174 modules)
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 709ms (272 modules)
+ GET /api/auth/signin?callbackUrl=%2F 302 in 1209ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 1213ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 2.7s (910 modules)
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 2153ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 3012ms
+ ✓ Compiled in 373ms (338 modules)
+ GET /login 200 in 35ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 83ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 25ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 25ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 37ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 37ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 26ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 29ms
+ ✓ Compiled /api/analytics in 232ms (591 modules)
+ GET /api/analytics 401 in 318ms
+ GET /api/auth/session 200 in 37ms
+ POST /api/auth/_log 200 in 19ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 28ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 28ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 67ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 31ms
+ POST /api/auth/_log 200 in 28ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 26ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 28ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 24ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 28ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 25ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 28ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 26ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 28ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 16ms
