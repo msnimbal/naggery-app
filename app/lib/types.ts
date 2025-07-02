@@ -4,6 +4,9 @@ export interface User {
   email: string
   name?: string
   phone?: string
+  gender?: Gender
+  termsAccepted: boolean
+  termsAcceptedAt?: Date
   emailVerified?: Date
   phoneVerified?: Date
   twoFaEnabled: boolean
@@ -14,6 +17,15 @@ export interface User {
   updatedAt: Date
 }
 
+export type Gender = 'MALE' | 'FEMALE' | 'OTHER' | 'PREFER_NOT_TO_SAY'
+
+export const GENDER_LABELS: Record<Gender, string> = {
+  MALE: 'Male',
+  FEMALE: 'Female',
+  OTHER: 'Other',
+  PREFER_NOT_TO_SAY: 'Prefer not to say'
+}
+
 export interface Entry {
   id: string
   userId: string
@@ -21,6 +33,10 @@ export interface Entry {
   title?: string
   content?: string
   voiceUrl?: string
+  transcription?: string
+  aiNotes?: string
+  processingStatus: ProcessingStatus
+  aiProvider?: string
   mood: Mood
   createdAt: Date
   updatedAt: Date
@@ -130,3 +146,94 @@ export interface TwoFactorSetup {
 }
 
 export type VerificationType = 'EMAIL_VERIFICATION' | 'SMS_VERIFICATION' | 'PASSWORD_RESET' | 'EMAIL_CHANGE' | 'TWO_FA_SETUP'
+
+// AI and Speech Recognition Types
+export type ProcessingStatus = 'NONE' | 'TRANSCRIBING' | 'GENERATING' | 'COMPLETED' | 'FAILED'
+
+export type ApiProvider = 'OPENAI' | 'CLAUDE'
+
+export interface ApiKey {
+  id: string
+  userId: string
+  provider: ApiProvider
+  keyName: string
+  encryptedKey: string
+  isActive: boolean
+  lastUsed?: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface SpeechRecognitionResult {
+  transcript: string
+  confidence: number
+  isFinal: boolean
+}
+
+export interface VoiceTranscription {
+  text: string
+  confidence: number
+  duration: number
+  processingTime: number
+}
+
+export interface AiNotesGeneration {
+  originalText: string
+  generatedNotes: string
+  categories: string[]
+  keyPoints: string[]
+  emotionalContext?: string
+  provider: ApiProvider
+  processingTime: number
+}
+
+export interface AiProcessingRequest {
+  text: string
+  context?: string
+  options?: {
+    includeCategories?: boolean
+    includeEmotionalAnalysis?: boolean
+    maxBulletPoints?: number
+    tone?: 'professional' | 'casual' | 'legal'
+  }
+}
+
+export interface AiProcessingResponse {
+  success: boolean
+  notes?: string
+  categories?: string[]
+  keyPoints?: string[]
+  emotionalContext?: string
+  error?: string
+  provider?: ApiProvider
+}
+
+export interface SpeechRecognitionConfig {
+  language?: string
+  continuous?: boolean
+  interimResults?: boolean
+  maxAlternatives?: number
+}
+
+export interface VoiceRecordingEnhanced {
+  blob: Blob
+  url: string
+  duration: number
+  transcription?: VoiceTranscription
+  aiNotes?: AiNotesGeneration
+}
+
+export interface ApiKeyValidation {
+  isValid: boolean
+  provider: ApiProvider
+  keyName?: string
+  error?: string
+}
+
+export interface UserPreferences {
+  autoTranscribe: boolean
+  autoGenerateNotes: boolean
+  preferredAiProvider: ApiProvider
+  speechLanguage: string
+  aiProcessingTone: 'professional' | 'casual' | 'legal'
+}

@@ -46,6 +46,9 @@ model User {
   email         String    @unique
   password      String
   phone         String?   @unique
+  gender        Gender?
+  termsAccepted Boolean   @default(false)
+  termsAcceptedAt DateTime?
   emailVerified DateTime?
   phoneVerified DateTime?
   twoFaEnabled  Boolean   @default(false)
@@ -61,6 +64,7 @@ model User {
   entries       Entry[]
   backupCodes   BackupCode[]
   verificationRequests VerificationRequest[]
+  apiKeys       ApiKey[]
 }
 
 model VerificationToken {
@@ -110,19 +114,39 @@ enum VerificationType {
 }
 
 model Entry {
-  id          String    @id @default(cuid())
-  userId      String
-  type        EntryType
-  title       String?
-  content     String?
-  voiceUrl    String?
-  mood        Mood
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String           @id @default(cuid())
+  userId            String
+  type              EntryType
+  title             String?
+  content           String?
+  voiceUrl          String?
+  transcription     String?          // Voice-to-text transcription
+  aiNotes           String?          // AI-generated pointed notes
+  processingStatus  ProcessingStatus @default(NONE)
+  aiProvider        String?          // 'openai' or 'claude'
+  mood              Mood
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([createdAt])
+}
+
+model ApiKey {
+  id          String      @id @default(cuid())
+  userId      String
+  provider    ApiProvider
+  keyName     String      // User-friendly name for the key
+  encryptedKey String     // Encrypted API key
+  isActive    Boolean     @default(true)
+  lastUsed    DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@unique([userId, provider])
 }
 
 enum EntryType {
@@ -139,4 +163,24 @@ enum Mood {
   FRUSTRATED
   ANXIOUS
   CALM
+}
+
+enum ProcessingStatus {
+  NONE           // No processing needed/requested
+  TRANSCRIBING   // Converting voice to text
+  GENERATING     // Generating AI notes from transcription
+  COMPLETED      // AI processing completed
+  FAILED         // Processing failed
+}
+
+enum ApiProvider {
+  OPENAI
+  CLAUDE
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
 }

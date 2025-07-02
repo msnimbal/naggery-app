@@ -7,8 +7,8 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Naggery - Personal Documentation',
-  description: 'Your private, personal record keeper',
+  title: 'Naggery - Men\'s Mental Wellbeing',
+  description: 'Supporting men\'s emotional wellness through secure, private documentation',
   manifest: '/manifest.json',
   icons: {
     icon: '/favicon.ico',

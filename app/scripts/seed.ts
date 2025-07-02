@@ -16,6 +16,9 @@ async function main() {
       update: {
         // Update existing demo user with new security fields
         phone: '+1234567890',
+        gender: 'MALE',
+        termsAccepted: true,
+        termsAcceptedAt: new Date(),
         emailVerified: new Date(),
         phoneVerified: new Date(),
         twoFaEnabled: false, // Initially disabled for easy testing
@@ -28,6 +31,9 @@ async function main() {
         name: 'John Doe',
         password: hashedPassword,
         phone: '+1234567890',
+        gender: 'MALE',
+        termsAccepted: true,
+        termsAcceptedAt: new Date(),
         emailVerified: new Date(),
         phoneVerified: new Date(),
         twoFaEnabled: false, // Initially disabled for easy testing
@@ -104,10 +110,12 @@ async function main() {
     console.log('Email: john@doe.com')
     console.log('Password: johndoe123')
     console.log('Phone: +1234567890')
+    console.log('Gender: Male')
     console.log('')
     console.log('Security Status:')
     console.log('- Email Verified: ✅')
     console.log('- Phone Verified: ✅')
+    console.log('- Terms Accepted: ✅')
     console.log('- 2FA Enabled: ❌ (can be enabled in /security)')
     console.log('- Account Active: ✅')
   } catch (error) {

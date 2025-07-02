@@ -11,11 +11,27 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password, phone } = await request.json()
+    const { name, email, password, phone, gender, termsAccepted } = await request.json()
 
-    if (!name || !email || !password || !phone) {
+    if (!name || !email || !password || !phone || !gender) {
       return NextResponse.json(
-        { error: 'Name, email, password, and phone number are required' },
+        { error: 'Name, email, password, phone number, and gender are required' },
+        { status: 400 }
+      )
+    }
+
+    if (!termsAccepted) {
+      return NextResponse.json(
+        { error: 'You must accept the Terms and Conditions to create an account' },
+        { status: 400 }
+      )
+    }
+
+    // Validate gender
+    const validGenders = ['MALE', 'FEMALE', 'OTHER', 'PREFER_NOT_TO_SAY']
+    if (!validGenders.includes(gender)) {
+      return NextResponse.json(
+        { error: 'Invalid gender selection' },
         { status: 400 }
       )
     }
@@ -91,6 +107,9 @@ export async function POST(request: NextRequest) {
         email,
         password: hashedPassword,
         phone: formattedPhone,
+        gender,
+        termsAccepted: true,
+        termsAcceptedAt: new Date(),
         isActive: false // User must verify email first
       },
       select: {
@@ -98,6 +117,9 @@ export async function POST(request: NextRequest) {
         name: true,
         email: true,
         phone: true,
+        gender: true,
+        termsAccepted: true,
+        termsAcceptedAt: true,
         isActive: true,
         createdAt: true
       }

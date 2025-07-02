@@ -60,6 +60,10 @@ export async function GET(request: NextRequest) {
         title: true,
         content: true,
         voiceUrl: true,
+        transcription: true,
+        aiNotes: true,
+        processingStatus: true,
+        aiProvider: true,
         mood: true,
         createdAt: true,
         updatedAt: true
@@ -91,7 +95,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { type, title, content, voiceUrl, mood } = await request.json()
+    const { 
+      type, 
+      title, 
+      content, 
+      voiceUrl, 
+      transcription,
+      aiNotes,
+      processingStatus,
+      aiProvider,
+      mood 
+    } = await request.json()
 
     if (!type || !mood) {
       return NextResponse.json(
@@ -100,16 +114,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (type === 'TEXT' && !content) {
+    if (type === 'TEXT' && !content && !transcription) {
       return NextResponse.json(
-        { error: 'Content is required for text entries' },
+        { error: 'Content or transcription is required for text entries' },
         { status: 400 }
       )
     }
 
-    if (type === 'VOICE' && !voiceUrl) {
+    if (type === 'VOICE' && !voiceUrl && !transcription) {
       return NextResponse.json(
-        { error: 'Voice URL is required for voice entries' },
+        { error: 'Voice URL or transcription is required for voice entries' },
         { status: 400 }
       )
     }
@@ -121,6 +135,10 @@ export async function POST(request: NextRequest) {
         title,
         content,
         voiceUrl,
+        transcription,
+        aiNotes,
+        processingStatus: processingStatus || 'NONE',
+        aiProvider,
         mood
       },
       select: {
@@ -129,6 +147,10 @@ export async function POST(request: NextRequest) {
         title: true,
         content: true,
         voiceUrl: true,
+        transcription: true,
+        aiNotes: true,
+        processingStatus: true,
+        aiProvider: true,
         mood: true,
         createdAt: true,
         updatedAt: true

@@ -104,4 +104,69 @@ export class SecurityUtils {
       errors
     }
   }
+
+  // API Key Management Methods
+  static encryptApiKey(apiKey: string): string {
+    if (!apiKey || apiKey.trim() === '') {
+      throw new Error('API key cannot be empty')
+    }
+    return this.encryptData(apiKey.trim())
+  }
+
+  static decryptApiKey(encryptedApiKey: string): string {
+    if (!encryptedApiKey || encryptedApiKey.trim() === '') {
+      throw new Error('Encrypted API key cannot be empty')
+    }
+    return this.decryptData(encryptedApiKey.trim())
+  }
+
+  static validateApiKeyFormat(apiKey: string, provider: 'OPENAI' | 'CLAUDE'): {
+    isValid: boolean
+    error?: string
+  } {
+    if (!apiKey || apiKey.trim() === '') {
+      return { isValid: false, error: 'API key cannot be empty' }
+    }
+
+    const key = apiKey.trim()
+
+    switch (provider) {
+      case 'OPENAI':
+        // OpenAI keys typically start with 'sk-' and are 51+ characters
+        if (!key.startsWith('sk-')) {
+          return { isValid: false, error: 'OpenAI API keys must start with "sk-"' }
+        }
+        if (key.length < 20) {
+          return { isValid: false, error: 'OpenAI API key appears to be too short' }
+        }
+        break
+      
+      case 'CLAUDE':
+        // Claude/Anthropic keys typically start with 'sk-ant-' 
+        if (!key.startsWith('sk-ant-')) {
+          return { isValid: false, error: 'Claude API keys must start with "sk-ant-"' }
+        }
+        if (key.length < 20) {
+          return { isValid: false, error: 'Claude API key appears to be too short' }
+        }
+        break
+      
+      default:
+        return { isValid: false, error: 'Unsupported API provider' }
+    }
+
+    return { isValid: true }
+  }
+
+  static maskApiKey(apiKey: string): string {
+    if (!apiKey || apiKey.length < 8) {
+      return '****'
+    }
+    
+    const start = apiKey.substring(0, 4)
+    const end = apiKey.substring(apiKey.length - 4)
+    const masked = '*'.repeat(Math.max(4, apiKey.length - 8))
+    
+    return `${start}${masked}${end}`
+  }
 }

@@ -8,8 +8,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Lock, Mail, User, Phone, CheckCircle, AlertTriangle } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Lock, Mail, User, Phone, CheckCircle, AlertTriangle, Users } from 'lucide-react'
 import { EmailVerificationNotice } from '@/components/security/email-verification-notice'
+import { GENDER_LABELS, Gender } from '@/lib/types'
 import { toast } from 'sonner'
 
 export default function SignupPage() {
@@ -17,8 +20,10 @@ export default function SignupPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [gender, setGender] = useState<Gender | ''>('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [passwordErrors, setPasswordErrors] = useState<string[]>([])
   const [createdUser, setCreatedUser] = useState<any>(null)
@@ -80,6 +85,16 @@ export default function SignupPage() {
       return
     }
 
+    if (!gender) {
+      toast.error('Please select your gender')
+      return
+    }
+
+    if (!termsAccepted) {
+      toast.error('You must accept the Terms and Conditions to continue')
+      return
+    }
+
     if (password !== confirmPassword) {
       toast.error('Passwords do not match')
       return
@@ -108,7 +123,9 @@ export default function SignupPage() {
           name, 
           email, 
           password, 
-          phone: formattedPhone 
+          phone: formattedPhone,
+          gender,
+          termsAccepted: true
         })
       })
 
@@ -160,9 +177,9 @@ export default function SignupPage() {
           <div className="flex items-center justify-center w-16 h-16 bg-blue-500/10 rounded-lg mx-auto mb-4">
             <User className="h-8 w-8 text-blue-400" />
           </div>
-          <CardTitle className="text-2xl font-bold text-gray-50">Create Account</CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-50">Join Naggery</CardTitle>
           <CardDescription className="text-gray-400">
-            Join Naggery to start securely documenting your experiences
+            Supporting men's mental wellbeing through secure, private documentation
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -221,6 +238,31 @@ export default function SignupPage() {
               </div>
               <p className="text-xs text-gray-400">Include country code (e.g., +1 for US)</p>
             </div>
+
+            <div className="space-y-2">
+              <label htmlFor="gender" className="text-sm font-medium text-gray-200">
+                Gender
+              </label>
+              <div className="relative">
+                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 z-10" />
+                <Select value={gender} onValueChange={(value: Gender) => setGender(value)} disabled={isLoading}>
+                  <SelectTrigger className="pl-10 bg-gray-700 border-gray-600 text-gray-50">
+                    <SelectValue placeholder="Select your gender" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-700 border-gray-600">
+                    {Object.entries(GENDER_LABELS).map(([key, label]) => (
+                      <SelectItem 
+                        key={key} 
+                        value={key}
+                        className="text-gray-50 focus:bg-gray-600 focus:text-gray-50"
+                      >
+                        {label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
             
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium text-gray-200">
@@ -273,6 +315,33 @@ export default function SignupPage() {
               )}
             </div>
 
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <Checkbox
+                  id="terms"
+                  checked={termsAccepted}
+                  onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                  disabled={isLoading}
+                  className="mt-1"
+                />
+                <div className="text-sm">
+                  <label htmlFor="terms" className="text-gray-200 cursor-pointer">
+                    I agree to the{' '}
+                    <Link 
+                      href="/terms" 
+                      className="text-blue-400 hover:text-blue-300 underline"
+                      target="_blank"
+                    >
+                      Terms and Conditions
+                    </Link>
+                  </label>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Required to create an account
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <Alert className="bg-blue-950 border-blue-800">
               <CheckCircle className="h-4 w-4 text-blue-400" />
               <AlertDescription className="text-blue-300">
@@ -283,7 +352,7 @@ export default function SignupPage() {
             <Button
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-              disabled={isLoading || passwordErrors.length > 0 || !!(confirmPassword && password !== confirmPassword)}
+              disabled={isLoading || passwordErrors.length > 0 || !!(confirmPassword && password !== confirmPassword) || !termsAccepted}
             >
               {isLoading ? 'Creating account...' : 'Create Secure Account'}
             </Button>

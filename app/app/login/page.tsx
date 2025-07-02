@@ -70,9 +70,9 @@ export default function LoginPage() {
           <div className="flex items-center justify-center w-16 h-16 bg-blue-500/10 rounded-lg mx-auto mb-4">
             <Lock className="h-8 w-8 text-blue-400" />
           </div>
-          <CardTitle className="text-2xl font-bold text-gray-50">Welcome to Naggery</CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-50">Welcome Back to Naggery</CardTitle>
           <CardDescription className="text-gray-400">
-            Your private, personal record keeper
+            Supporting men's emotional wellness and mental health journey
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -128,14 +128,6 @@ export default function LoginPage() {
               <Link href="/signup" className="text-blue-400 hover:text-blue-300 font-medium">
                 Sign up
               </Link>
-            </p>
-          </div>
-
-          <div className="mt-4 p-3 bg-gray-700/50 rounded-lg">
-            <p className="text-xs text-gray-400 mb-2">Demo Account:</p>
-            <p className="text-xs text-gray-300">
-              Email: john@doe.com<br />
-              Password: johndoe123
             </p>
           </div>
         </CardContent>

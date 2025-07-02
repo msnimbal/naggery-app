@@ -48,8 +48,11 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold text-gray-50 mb-2">
             Welcome back, {session?.user?.name || 'User'}
           </h2>
-          <p className="text-gray-400">
-            Your private, personal record keeper
+          <p className="text-gray-400 mb-2">
+            Supporting your mental wellbeing and emotional wellness
+          </p>
+          <p className="text-sm text-blue-300">
+            A safe space for men to document thoughts, feelings, and experiences
           </p>
         </div>
 
