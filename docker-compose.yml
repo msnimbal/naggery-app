@@ -1,0 +1,96 @@
+
+# Naggery App - Development Docker Compose
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: naggery-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-naggery}
+      POSTGRES_USER: ${DB_USER:-naggery_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-naggery_password}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./deployment/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-naggery_user} -d ${DB_NAME:-naggery}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - naggery-network
+
+  # Naggery Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: naggery-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      DATABASE_URL: postgresql://${DB_USER:-naggery_user}:${DB_PASSWORD:-naggery_password}@postgres:5432/${DB_NAME:-naggery}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-naggery_user}
+      DB_PASSWORD: ${DB_PASSWORD:-naggery_password}
+      DB_NAME: ${DB_NAME:-naggery}
+      
+      # NextAuth
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-development-secret-change-in-production}
+      
+      # AbacusAI
+      ABACUSAI_API_KEY: ${ABACUSAI_API_KEY}
+      
+      # App Settings
+      NODE_ENV: ${NODE_ENV:-development}
+      SEED_DATABASE: ${SEED_DATABASE:-true}
+      
+      # Security Settings
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-dev-encryption-key-32-characters}
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret}
+      
+      # Rate Limiting
+      RATE_LIMIT_WINDOW: ${RATE_LIMIT_WINDOW:-900000}
+      RATE_LIMIT_MAX_REQUESTS: ${RATE_LIMIT_MAX_REQUESTS:-5}
+      
+      # Email Settings (optional for development)
+      EMAIL_FROM: ${EMAIL_FROM:-noreply@naggery.app}
+      EMAIL_SERVICE: ${EMAIL_SERVICE:-console}
+      
+      # SMS Settings (optional for development)
+      SMS_SERVICE: ${SMS_SERVICE:-console}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      # Development: mount source for hot reload
+      - ./app:/app:cached
+      - /app/node_modules
+      - /app/.next
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - naggery-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  naggery-network:
+    driver: bridge

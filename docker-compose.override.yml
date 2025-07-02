@@ -1,0 +1,29 @@
+
+# Naggery App - Local Development Overrides
+version: '3.8'
+
+services:
+  app:
+    # Override for development
+    build:
+      target: builder
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: 0
+      SEED_DATABASE: true
+    volumes:
+      # Development: mount source code for hot reload
+      - ./app:/app:cached
+      - /app/node_modules
+      - /app/.next
+    command: yarn dev
+    stdin_open: true
+    tty: true
+
+  postgres:
+    # Development database settings
+    environment:
+      POSTGRES_LOG_STATEMENT: all
+      POSTGRES_LOG_MIN_DURATION_STATEMENT: 0
+    ports:
+      - "5432:5432"

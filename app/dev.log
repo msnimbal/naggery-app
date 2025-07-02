@@ -78,3 +78,6 @@ Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
  GET /api/entries?limit=5 200 in 18ms
  GET /api/auth/session 200 in 25ms
  GET /api/entries?limit=5 200 in 30ms
+ ✓ Compiled in 814ms (639 modules)
+ ✓ Compiled in 383ms (465 modules)
+[?25h
