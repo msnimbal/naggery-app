@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 219 20% 98%;
+    --foreground: 219 100% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 219 100% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 219 100% 5%;
+    --primary: 173 50% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 219 14% 96%;
+    --secondary-foreground: 219 100% 5%;
+    --muted: 219 14% 96%;
+    --muted-foreground: 219 10% 46%;
+    --accent: 173 50% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 219 30% 91%;
+    --input: 219 30% 91%;
+    --ring: 173 50% 58%;
+    --chart-1: 196 100% 60%;
+    --chart-2: 25 100% 65%;
+    --chart-3: 0 84% 60%;
+    --chart-4: 303 100% 60%;
+    --chart-5: 0 74% 63%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 219 84% 5%;
+    --foreground: 219 20% 98%;
+    --card: 219 84% 5%;
+    --card-foreground: 219 20% 98%;
+    --popover: 219 84% 5%;
+    --popover-foreground: 219 20% 98%;
+    --primary: 173 50% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 219 32% 17%;
+    --secondary-foreground: 219 20% 98%;
+    --muted: 219 32% 17%;
+    --muted-foreground: 219 20% 65%;
+    --accent: 173 50% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 219 20% 98%;
+    --border: 219 32% 17%;
+    --input: 219 32% 17%;
+    --ring: 173 50% 58%;
+    --chart-1: 196 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .animate-count-up {
+    animation: countUp 2s ease-out;
+  }
+  
+  @keyframes countUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .prose-naggery {
+    @apply prose prose-slate max-w-none;
+  }
+  
+  .prose-naggery h1,
+  .prose-naggery h2,
+  .prose-naggery h3 {
+    @apply text-foreground;
+  }
+  
+  .prose-naggery p {
+    @apply text-muted-foreground;
+  }
+}
