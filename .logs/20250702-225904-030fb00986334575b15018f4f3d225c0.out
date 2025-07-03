@@ -21,3 +21,22 @@
  GET /api/auth/session 200 in 389ms
  GET /api/entries?limit=5 200 in 468ms
  GET /api/entries?limit=5 200 in 27ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 26ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 64ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 29ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 32ms
+ GET / 200 in 30ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/entries?limit=5 200 in 29ms
+ GET /api/entries?limit=5 200 in 21ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 26ms
+ GET /api/auth/signin?callbackUrl=%2F 302 in 17ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 26ms
+ GET /login?callbackUrl=https%3A%2F%2F7414a0bca.preview.abacusai.app%2F 200 in 26ms
+ GET / 200 in 25ms
+ GET / 200 in 24ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/entries?limit=5 200 in 25ms
+ GET /api/entries?limit=5 200 in 20ms
